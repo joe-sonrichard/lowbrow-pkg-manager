@@ -1,0 +1,27 @@
+#!/bin/bash
+source lib.sh
+
+BASEURL=https://github.com/ahmetb/kubectx
+
+if get_latest_release "$BASEURL"
+then
+  i=1 #TODO: Find better way to say if failed exit else continue.
+else
+  exit 1
+fi
+
+function update_kubectx_file(){
+  TARGET="$1"
+  DESTPATH=/usr/local/bin
+
+  DOWNLOADURL=https://raw.githubusercontent.com/ahmetb/kubectx/v"$RELEASE"/"$TARGET"
+
+  echo "Curling URL: $DOWNLOADURL"
+
+  cd $DESTPATH && sudo curl -LOs "$DOWNLOADURL"
+
+  make_executable "$DESTPATH"/"$TARGET"
+}
+
+update_kubectx_file kubens
+update_kubectx_file kubectx

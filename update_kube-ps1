@@ -10,7 +10,6 @@ else
   exit 1
 fi
 
-PKG=k9s_"$RELEASE"_Linux_x86_64.tar.gz
 TARGET=kube-ps1.sh
 DESTPATH=~/dotfiles
 

@@ -8,11 +8,19 @@ function err(){
 
 # Expects base url as 1st arg
 function get_latest_release() {
-  export RELEASE=$(curl -s "$1"/releases/latest | grep -oE '[0-9]{1,\}.[0-9]{1,\}.[0-9]{1,\}')
+  URL="$1"/releases/latest
+  export RELEASE=$(curl -s "$URL" | grep -oE '[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}')
   if [ "$RELEASE" == "" ]
   then
-    err "Failed parse version out of URL redirect."
-    return 1
+    export RELEASE=$(curl -s "$URL" | grep -oE '[0-9]{1,3}.[0-9]{1,3}')
+    if [ "$RELEASE" == "" ]
+    then
+      err "Failed parse version out of URL redirect." "$URL"
+      return 1
+    else
+      echo "Updating to version: $RELEASE"
+      return 0
+    fi
   else
     echo "Updating to version: $RELEASE"
     return 0

@@ -35,5 +35,3 @@ make_executable "$DEST"
 
 echo "Removing $PKG from /tmp/ directory"
 rm "$PKG"
-
-err "Practice Error"
