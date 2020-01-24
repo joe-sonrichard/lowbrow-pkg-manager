@@ -9,9 +9,11 @@ function err(){
 # Expects base url as 1st arg
 function get_latest_release() {
   URL="$1"/releases/latest
+  # Try for version assuming it's has 3 parts (x.x.x)
   export RELEASE=$(curl -s "$URL" | grep -oE '[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}')
   if [ "$RELEASE" == "" ]
   then
+    # Try for version assuming it has 2 parts (x.x)
     export RELEASE=$(curl -s "$URL" | grep -oE '[0-9]{1,3}.[0-9]{1,3}')
     if [ "$RELEASE" == "" ]
     then
