@@ -1,0 +1,10 @@
+#!/bin/bash
+source lib.sh
+
+RELEASE=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+TARGET=kubectl
+DESTPATH=/usr/local/bin
+
+cd "$DESTPATH" && sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/"$RELEASE"/bin/linux/amd64/"$TARGET"
+
+make_executable "$DESTPATH"/"$TARGET"
