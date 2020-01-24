@@ -1,0 +1,23 @@
+#!/bin/bash
+source lib.sh
+
+BASEURL=https://github.com/jonmosco/kube-ps1
+
+if get_latest_release "$BASEURL"
+then
+  i=1 #TODO: Find better way to say if failed exit else continue.
+else
+  exit 1
+fi
+
+PKG=k9s_"$RELEASE"_Linux_x86_64.tar.gz
+TARGET=kube-ps1.sh
+DESTPATH=~/dotfiles
+
+DOWNLOADURL=https://raw.githubusercontent.com/jonmosco/kube-ps1/v"$RELEASE"/"$TARGET"
+
+cd "$DESTPATH"
+
+echo "Curling URL: $DOWNLOADURL"
+
+curl -LOs "$DOWNLOADURL"

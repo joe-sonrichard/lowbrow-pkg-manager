@@ -1,0 +1,39 @@
+#!/bin/bash
+source lib.sh
+
+BASEURL=https://github.com/derailed/k9s
+
+if get_latest_release "$BASEURL"
+then
+  i=1 #TODO: Find better way to say if failed exit else continue.
+else
+  exit 1
+fi
+
+PKG=k9s_"$RELEASE"_Linux_x86_64.tar.gz
+TARGET=k9s
+DEST=/usr/local/bin/"$TARGET"
+
+DOWNLOADURL="$BASEURL"/releases/download/v"$RELEASE"/"$PKG"
+
+if cd /tmp/
+then
+  i=2
+else
+  err "Failed to move into /tmp/"
+fi
+
+echo "Curling URL: $DOWNLOADURL"
+
+curl -LOs "$DOWNLOADURL"
+
+echo "Unpacking $PKG"
+tar --extract -f "$PKG" "$TARGET"
+sudo mv "$TARGET" "$DEST"
+
+make_executable "$DEST"
+
+echo "Removing $PKG from /tmp/ directory"
+rm "$PKG"
+
+err "Practice Error"
