@@ -10,7 +10,7 @@ else
   exit 1
 fi
 
-PKG=k9s_"$RELEASE"_Linux_x86_64.tar.gz
+PKG=k9s_Linux_x86_64.tar.gz
 TARGET=k9s
 DEST=/usr/local/bin/"$TARGET"
 
